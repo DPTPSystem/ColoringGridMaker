@@ -68,20 +68,20 @@
             // fileLoadToolStripMenuItem
             // 
             this.fileLoadToolStripMenuItem.Name = "fileLoadToolStripMenuItem";
-            this.fileLoadToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.fileLoadToolStripMenuItem.Size = new System.Drawing.Size(118, 22);
             this.fileLoadToolStripMenuItem.Text = "File load";
             this.fileLoadToolStripMenuItem.Click += new System.EventHandler(this.fileLoadToolStripMenuItem_Click);
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(118, 22);
             this.saveToolStripMenuItem.Text = "Save";
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(118, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -125,6 +125,7 @@
             this.button1.TabIndex = 4;
             this.button1.Text = "Generate";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // label2
             // 

@@ -7,3 +7,14 @@ C:\Users\DPTP\Google Drive\github\ColoringGridMaker\ColoringGridMaker\obj\Debug\
 C:\Users\DPTP\Google Drive\github\ColoringGridMaker\ColoringGridMaker\obj\Debug\ColoringGridMaker.csproj.GenerateResource.cache
 C:\Users\DPTP\Google Drive\github\ColoringGridMaker\ColoringGridMaker\obj\Debug\ColoringGridMaker.exe
 C:\Users\DPTP\Google Drive\github\ColoringGridMaker\ColoringGridMaker\obj\Debug\ColoringGridMaker.pdb
+C:\Users\DPTP\Google Drive\github\ColoringGridMaker\ColoringGridMaker\bin\Debug\Antlr3.Runtime.dll
+C:\Users\DPTP\Google Drive\github\ColoringGridMaker\ColoringGridMaker\bin\Debug\Iesi.Collections.dll
+C:\Users\DPTP\Google Drive\github\ColoringGridMaker\ColoringGridMaker\bin\Debug\NHibernate.dll
+C:\Users\DPTP\Google Drive\github\ColoringGridMaker\ColoringGridMaker\bin\Debug\Remotion.Linq.dll
+C:\Users\DPTP\Google Drive\github\ColoringGridMaker\ColoringGridMaker\bin\Debug\Remotion.Linq.EagerFetching.dll
+C:\Users\DPTP\Google Drive\github\ColoringGridMaker\ColoringGridMaker\bin\Debug\Antlr3.Runtime.xml
+C:\Users\DPTP\Google Drive\github\ColoringGridMaker\ColoringGridMaker\bin\Debug\Iesi.Collections.xml
+C:\Users\DPTP\Google Drive\github\ColoringGridMaker\ColoringGridMaker\bin\Debug\NHibernate.xml
+C:\Users\DPTP\Google Drive\github\ColoringGridMaker\ColoringGridMaker\bin\Debug\Remotion.Linq.xml
+C:\Users\DPTP\Google Drive\github\ColoringGridMaker\ColoringGridMaker\bin\Debug\Remotion.Linq.EagerFetching.xml
+C:\Users\DPTP\Google Drive\github\ColoringGridMaker\ColoringGridMaker\obj\Debug\ColoringGridMaker.csproj.CopyComplete
