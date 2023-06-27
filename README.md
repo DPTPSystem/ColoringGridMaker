@@ -5,6 +5,10 @@
 
 ![DPTP System](https://github.com/DPTPSystem/ColoringGridMaker/blob/master/images/cgm1.JPG "DPTP System")
 
+# Mi is ez?
+Egy program, amely egy képet színkód alapján detektál és rácsos szerkezetbe rendezve tervet készít és ezzel segít, egy amolyan kifestős festők 
+gyakorlásában, illetve amatőröknek biztosít segítséget, hogy könnyebben tudjanak szépet alkotni.
+
 # Miért
 Ötletként merült fel, hogy jól nézne ki, ha bizonyos pixel képeket tempera vagy más vízbázisú festékkel alkotnánk újra, de ehhez tehetség is
 kellene, amely nem feltétlen áll mindenki rendelkezésére. Ennek okán kezdtem el fejleszteni egy programot, amely segít abban, hogy a megfelelő
