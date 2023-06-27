@@ -3,7 +3,7 @@
 * Dátum: 2023.06.27.
 * #C, Net v4.7.2
 
-![DPTP System](https://github.com/DPTPSystem/ColoringGridMaker/blob/master/images/cgm1.JPG "DPTP System")
+![DPTP System](https://github.com/DPTPSystem/ColoringGridMaker/blob/master/images/cgm2.JPG "DPTP System")
 
 # Mi is ez?
 Egy program, amely egy képet színkód alapján detektál és rácsos szerkezetbe rendezve tervet készít és ezzel segít, egy amolyan kifestős festők 

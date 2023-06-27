@@ -14,6 +14,7 @@ namespace ColoringGridMaker
     struct ImageDef
     {
         public int width, height, size, bitPixel, StartAddr;
+        public int[] Colors;
     }
 
     public partial class Form1 : Form
@@ -21,6 +22,7 @@ namespace ColoringGridMaker
         ImageDef BMP = new ImageDef();
         byte[] rows;
         byte[] Image1 = new byte[480 * 300 * 2];
+        
         public Form1()
         {
             InitializeComponent();
@@ -98,44 +100,55 @@ namespace ColoringGridMaker
 
                 BMP.bitPixel = rows[0x1D];
                 BMP.bitPixel = BMP.bitPixel << 8 | rows[0x1C];
-             
+
+                // Szinpaletta kinyerése
+                BMP.Colors = new int[16];
+                for (int i = 0; i < 16; i++)
+                {
+                    BMP.Colors[i] = rows[0x38+(i*4)];
+                    BMP.Colors[i] = BMP.Colors[i] << 8 | rows[0x37 + (i * 4)];
+                    BMP.Colors[i] = BMP.Colors[i] << 8 | rows[0x36 + (i * 4)];
+                    BMP.Colors[i] = BMP.Colors[i] << 8 | rows[0x35 + (i * 4)];
+                }
+
             }
-            
             
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             // kép szín dekódolása
-            int i = 0;
+            int i = 0, r, g, b;
             int color;
 
             //bitmap
-            Bitmap bmp = new Bitmap(BMP.width, BMP.height);
+            Bitmap bmp = new Bitmap(480, 300);// BMP.width, BMP.height);
+            Graphics graf = Graphics.FromImage(bmp);
 
-            //create random pixels
-            for (int y = 0; y < BMP.width; y++)
+            for (int y = BMP.height - 1; y >= 0; y--)
             {
-                for (int x = BMP.height - 1; x >= 0; x--)
+                for (int x = 0; x < BMP.width; x++)
                 {
-                    //generate random ARGB value
-                    /*RRRRRRRR >> 3 --> RRRRR (5)
-                      GGGGGGGG >> 2 --> GGGGGG (6)
-                      BBBBBBBB >> 3 --> BBBBB (5)
-                     */
-                    
-                    color = rows[BMP.StartAddr+i++];
-                    int r = ((color & 0b11100000) >> 5);
-                    int g = ((color & 0b00011100) >> 2);
-                    int b =  (color & 0b00000011);
-
+                    color = BMP.Colors[rows[BMP.StartAddr + i++]];
+                    r = ((color >> 24) & 0x000000FF);
+                    g = ((color >> 16) & 0x000000FF);
+                    b = ((color >>  8) & 0x000000FF);
 
                     //set ARGB value
-                    bmp.SetPixel(y, x, Color.FromArgb(255, r, g, b));
+                    bmp.SetPixel(x, y, Color.FromArgb(255, r, g, b));
                 }
             }
+            for (i = 0; i < 16; i++)
+            {
+                color = BMP.Colors[i];
+                r = ((color >> 24) & 0x000000FF);
+                g = ((color >> 16) & 0x000000FF);
+                b = ((color >>  8) & 0x000000FF);
+                SolidBrush fill = new SolidBrush(Color.FromArgb(255, r, g, b));
+                graf.FillRectangle(fill, 21*i, 275, 20, 20);
+            }
 
-            //load bmp in picturebox1
+            //load bmp in picturebox
             pictureBox2.Image = bmp;
         }
     }
