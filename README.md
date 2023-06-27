@@ -3,7 +3,7 @@
 * Dátum: 2023.06.27.
 * #C, Net v4.7.2
 
-![DPTP System](https://github.com/DPTPSystem/BinaryClock/blob/master/images/diszkret_4.jpg "DPTP System")
+![DPTP System](https://github.com/DPTPSystem/ColoringGridMaker/blob/master/images/cgm1.JPG "DPTP System")
 
 # Miért
 Ötletként merült fel, hogy jól nézne ki, ha bizonyos pixel képeket tempera vagy más vízbázisú festékkel alkotnánk újra, de ehhez tehetség is
