@@ -47,6 +47,7 @@ namespace ColoringGridMaker
             trackBar1.Enabled = false;
             saveToolStripMenuItem.Enabled = false;
             checkBox1.Enabled = false;
+            checkBox2.Enabled = false;
         }
 
         // Kilépés
@@ -71,6 +72,7 @@ namespace ColoringGridMaker
                 trackBar1.Enabled = true;
                 saveToolStripMenuItem.Enabled = true;
                 checkBox1.Enabled = true;
+                checkBox2.Enabled = true;
 
                 // Fájl neve
                 label4.Text = Path.GetFileName(open.FileName);
@@ -227,23 +229,45 @@ namespace ColoringGridMaker
                 }
             }
 
+            Bitmap bmp2 = new Bitmap(480, 20);
+            Graphics graf2 = Graphics.FromImage(bmp2);
+            for (i = 0; i < 16; i++)
+            {
+                color = BMP.Colors[i];
+                r = ((color >> 24) & 0x000000FF);
+                g = ((color >> 16) & 0x000000FF);
+                b = ((color >>  8) & 0x000000FF);
+                SolidBrush fill = new SolidBrush(Color.FromArgb(255, r, g, b));
+                graf2.FillRectangle(fill, 21*i, 0, 20, 20);
+                // Create string formatting options (used for alignment)
+                StringFormat format2 = new StringFormat()
+                {
+                    Alignment = StringAlignment.Center,
+                    LineAlignment = StringAlignment.Center
+                };
+                RectangleF rectf2 = new RectangleF(21*i, 0, 20, 20);
+                graf2.DrawString(i.ToString("X"), new Font("Monospace", Convert.ToInt16(textBox2.Text)), Brushes.Gray, rectf2, format2);
+            }
 
-                    /*
-                    for (i = 0; i < 16; i++)
-                    {
-                        color = BMP.Colors[i];
-                        r = ((color >> 24) & 0x000000FF);
-                        g = ((color >> 16) & 0x000000FF);
-                        b = ((color >>  8) & 0x000000FF);
-                        SolidBrush fill = new SolidBrush(Color.FromArgb(255, r, g, b));
-                        graf.FillRectangle(fill, 21*i, 275, 20, 20);
-                    }
-                    */
+            // Color palette
+            pictureBox3.Image = bmp2;
 
-                    bmp.Save("SaveImage.png");
-
-            //load bmp in picturebox
-            pictureBox2.Image = bmp;
+            Bitmap bmpSave;
+            // Color Palette save
+            if (checkBox2.Checked)
+            {
+                bmpSave = MergedBitmaps(bmp, bmp2);
+            }
+            else
+            {
+                bmpSave = bmp;
+            }
+            pictureBox2.Image = bmpSave;
+            // Image save
+            bmp.Save("SaveImage.png");
+            bmp2.Save("SaveImage_ColorPalette.png");
+            if (checkBox2.Checked)
+                bmpSave.Save("SaveImage_Complette.png");
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
@@ -258,6 +282,19 @@ namespace ColoringGridMaker
                 MessageBox.Show("File save error.");
             }
             
+        }
+
+        private Bitmap MergedBitmaps(Bitmap bmp1, Bitmap bmp2)
+        {
+            Bitmap result = new Bitmap(Math.Max(bmp1.Width, bmp2.Width),
+                                       Math.Max(bmp1.Height+20, bmp2.Height));
+            using (Graphics g = Graphics.FromImage(result))
+            {
+                //g.DrawImage(bmp2, Point.Empty);
+                g.DrawImage(bmp2, 0, bmp1.Height);
+                g.DrawImage(bmp1, Point.Empty);
+            }
+            return result;
         }
     }
 }

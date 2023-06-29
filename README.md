@@ -19,8 +19,10 @@
 * * Kép mentése
 * * Kép méreteinek kiírása a GUI felületre
 * 2023.06.29. Fejlesztés 2 (v0.7)
-* * GUI kiegészítés
-* * Opcionáls rácsozás
+* * GUI kiegészítés, Grid, Color Palette
+* * Opcionális rácsozás
+* * Opcionális szinpalette integráció
+* * Képek külömböző exportálása (Normal számkódos, Külön színpaletta, kombinált - kettőt az egyben)
 
 # Mi is ez?
 Egy program, amely egy képet színkód alapján detektál és rácsos szerkezetbe rendezve tervet készít és ezzel segít, egy amolyan kifestős festők 
