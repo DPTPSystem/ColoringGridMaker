@@ -23,6 +23,7 @@
 * * Opcionális rácsozás
 * * Opcionális szinpalette integráció
 * * Képek külömböző exportálása (Normal számkódos, Külön színpaletta, kombinált - kettőt az egyben)
+* * Rács optimalizálása
 
 # Mi is ez?
 Egy program, amely egy képet színkód alapján detektál és rácsos szerkezetbe rendezve tervet készít és ezzel segít, egy amolyan kifestős festők 
@@ -66,3 +67,7 @@ Képi anyagok:
 ![DPTP System](https://github.com/DPTPSystem/ColoringGridMaker/blob/master/images/cgm4.JPG "DPTP System")
 
 ![DPTP System](https://github.com/DPTPSystem/ColoringGridMaker/blob/master/images/cgm5.JPG "DPTP System")
+
+![DPTP System](https://github.com/DPTPSystem/ColoringGridMaker/blob/master/images/cgm6.JPG "DPTP System")
+
+![DPTP System](https://github.com/DPTPSystem/ColoringGridMaker/blob/master/images/cgm7.JPG "DPTP System")

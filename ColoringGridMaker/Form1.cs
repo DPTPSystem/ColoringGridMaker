@@ -171,7 +171,6 @@ namespace ColoringGridMaker
             */
 
             int TileNumber = 0;
-            Pen blackPen = new Pen(Color.Gray, 1);
             for (int y = BMP.height - 1; y >= 0; y--)
             {
                 for (int x = 0; x < BMP.width; x++)
@@ -215,7 +214,9 @@ namespace ColoringGridMaker
                 }
             }
 
-            // Keret kirajzolása
+            // Rács kirajzolása
+            //Pen blackPen = new Pen(Color.Gray, 1);
+            Pen blackPen = new Pen(Color.FromArgb(250, 230, 230, 230), 1);
             if (checkBox1.Checked)
             {
                 for (int y = BMP.height; y >= 0; y--)
@@ -229,6 +230,7 @@ namespace ColoringGridMaker
                 }
             }
 
+            // Color palette created
             Bitmap bmp2 = new Bitmap(480, 20);
             Graphics graf2 = Graphics.FromImage(bmp2);
             for (i = 0; i < 16; i++)
@@ -249,7 +251,7 @@ namespace ColoringGridMaker
                 graf2.DrawString(i.ToString("X"), new Font("Monospace", Convert.ToInt16(textBox2.Text)), Brushes.Gray, rectf2, format2);
             }
 
-            // Color palette
+            // Color palette loading
             pictureBox3.Image = bmp2;
 
             Bitmap bmpSave;
