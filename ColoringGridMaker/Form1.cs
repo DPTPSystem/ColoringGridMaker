@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using System.Drawing.Drawing2D;
+using System.Drawing.Text;
 
 namespace ColoringGridMaker
 {
@@ -20,8 +22,8 @@ namespace ColoringGridMaker
     public partial class Form1 : Form
     {
         ImageDef BMP = new ImageDef();
+        Bitmap bmp;
         byte[] rows;
-        byte[] Image1 = new byte[480 * 300 * 2];
         
         public Form1()
         {
@@ -40,6 +42,10 @@ namespace ColoringGridMaker
             label2.Enabled = false;
             label3.Enabled = false;
             button1.Enabled = false;
+            textBox1.Enabled = false;
+            textBox2.Enabled = false;
+            trackBar1.Enabled = false;
+            saveToolStripMenuItem.Enabled = false;
         }
 
         // Kilépés
@@ -59,6 +65,10 @@ namespace ColoringGridMaker
             {
                 // Generálás engedélyezve
                 button1.Enabled = true;
+                textBox1.Enabled = true;
+                textBox2.Enabled = true;
+                trackBar1.Enabled = true;
+                saveToolStripMenuItem.Enabled = true;
                 // Fájl neve
                 label4.Text = Path.GetFileName(open.FileName);
 
@@ -121,10 +131,25 @@ namespace ColoringGridMaker
             int i = 0, r, g, b;
             int color;
 
+            int Pix = Convert.ToInt16(textBox1.Text);
+            int NewW = Pix * BMP.width;
+            int NewH = Pix * BMP.height;
+
+            if (NewW > 480 && NewH > 300)
+            {
+                pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
+            }
+            else
+            {
+                pictureBox2.SizeMode = PictureBoxSizeMode.CenterImage;
+            }
+            label6.Text = "{" + BMP.width + " * " + BMP.height + "} -> " + "{" + NewW + " * " + NewH + "}";
+
             //bitmap
-            Bitmap bmp = new Bitmap(480, 300);// BMP.width, BMP.height);
+            bmp = new Bitmap(NewW, NewH);// BMP.width, BMP.height);
             Graphics graf = Graphics.FromImage(bmp);
 
+            /*
             for (int y = BMP.height - 1; y >= 0; y--)
             {
                 for (int x = 0; x < BMP.width; x++)
@@ -138,6 +163,52 @@ namespace ColoringGridMaker
                     bmp.SetPixel(x, y, Color.FromArgb(255, r, g, b));
                 }
             }
+            */
+
+            int TileNumber = 0;
+            for (int y = BMP.height - 1; y >= 0; y--)
+            {
+                for (int x = 0; x < BMP.width; x++)
+                {
+                    TileNumber = rows[BMP.StartAddr + i++];
+                    color = BMP.Colors[TileNumber];
+
+                    r = ((color >> 24) & 0x000000FF);
+                    g = ((color >> 16) & 0x000000FF);
+                    b = ((color >> 8)  & 0x000000FF);
+
+                    //set ARGB value
+                    SolidBrush fill = new SolidBrush(Color.FromArgb(Convert.ToInt16(trackBar1.Value), r, g, b));
+                    graf.FillRectangle(fill, Pix * x, Pix * y, Pix, Pix);
+                    RectangleF rectf = new RectangleF(Pix * x, Pix * y, Pix, Pix);
+
+                    graf.SmoothingMode = SmoothingMode.AntiAlias;
+
+                    // The interpolation mode determines how intermediate values between two endpoints are calculated.
+                    graf.InterpolationMode = InterpolationMode.HighQualityBicubic;
+
+                    // Use this property to specify either higher quality, slower rendering, or lower quality, faster rendering of the contents of this Graphics object.
+                    graf.PixelOffsetMode = PixelOffsetMode.HighQuality;
+
+                    // This one is important
+                    graf.TextRenderingHint = TextRenderingHint.AntiAliasGridFit;
+
+                    // Create string formatting options (used for alignment)
+                    StringFormat format = new StringFormat()
+                    {
+                        Alignment = StringAlignment.Center,
+                        LineAlignment = StringAlignment.Center
+                    };
+                    
+                    graf.DrawString(TileNumber.ToString("X"), new Font("Monospace", Convert.ToInt16(textBox2.Text)), Brushes.Gray, rectf, format);
+
+                    // Flush all graphics changes to the bitmap
+                    graf.Flush();
+                }
+            }
+           
+
+            /*
             for (i = 0; i < 16; i++)
             {
                 color = BMP.Colors[i];
@@ -147,9 +218,26 @@ namespace ColoringGridMaker
                 SolidBrush fill = new SolidBrush(Color.FromArgb(255, r, g, b));
                 graf.FillRectangle(fill, 21*i, 275, 20, 20);
             }
+            */
+
+            bmp.Save("SaveImage.png");
 
             //load bmp in picturebox
             pictureBox2.Image = bmp;
+        }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                bmp.Save("SaveImage.png");
+                MessageBox.Show("Save successful!");
+            }
+            catch
+            {
+                MessageBox.Show("File save error.");
+            }
+            
         }
     }
 }
