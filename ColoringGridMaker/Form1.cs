@@ -46,6 +46,7 @@ namespace ColoringGridMaker
             textBox2.Enabled = false;
             trackBar1.Enabled = false;
             saveToolStripMenuItem.Enabled = false;
+            checkBox1.Enabled = false;
         }
 
         // Kilépés
@@ -69,6 +70,8 @@ namespace ColoringGridMaker
                 textBox2.Enabled = true;
                 trackBar1.Enabled = true;
                 saveToolStripMenuItem.Enabled = true;
+                checkBox1.Enabled = true;
+
                 // Fájl neve
                 label4.Text = Path.GetFileName(open.FileName);
 
@@ -166,6 +169,7 @@ namespace ColoringGridMaker
             */
 
             int TileNumber = 0;
+            Pen blackPen = new Pen(Color.Gray, 1);
             for (int y = BMP.height - 1; y >= 0; y--)
             {
                 for (int x = 0; x < BMP.width; x++)
@@ -179,6 +183,8 @@ namespace ColoringGridMaker
 
                     //set ARGB value
                     SolidBrush fill = new SolidBrush(Color.FromArgb(Convert.ToInt16(trackBar1.Value), r, g, b));
+
+                    // Color
                     graf.FillRectangle(fill, Pix * x, Pix * y, Pix, Pix);
                     RectangleF rectf = new RectangleF(Pix * x, Pix * y, Pix, Pix);
 
@@ -206,21 +212,35 @@ namespace ColoringGridMaker
                     graf.Flush();
                 }
             }
-           
 
-            /*
-            for (i = 0; i < 16; i++)
+            // Keret kirajzolása
+            if (checkBox1.Checked)
             {
-                color = BMP.Colors[i];
-                r = ((color >> 24) & 0x000000FF);
-                g = ((color >> 16) & 0x000000FF);
-                b = ((color >>  8) & 0x000000FF);
-                SolidBrush fill = new SolidBrush(Color.FromArgb(255, r, g, b));
-                graf.FillRectangle(fill, 21*i, 275, 20, 20);
+                for (int y = BMP.height; y >= 0; y--)
+                {
+                    for (int x = 0; x <= BMP.width; x++)
+                    {
+                        // Grid
+                        graf.DrawLine(blackPen, x * Pix, y * Pix, 0, y * Pix);
+                        graf.DrawLine(blackPen, x * Pix, y * Pix, x * Pix, 0);
+                    }
+                }
             }
-            */
 
-            bmp.Save("SaveImage.png");
+
+                    /*
+                    for (i = 0; i < 16; i++)
+                    {
+                        color = BMP.Colors[i];
+                        r = ((color >> 24) & 0x000000FF);
+                        g = ((color >> 16) & 0x000000FF);
+                        b = ((color >>  8) & 0x000000FF);
+                        SolidBrush fill = new SolidBrush(Color.FromArgb(255, r, g, b));
+                        graf.FillRectangle(fill, 21*i, 275, 20, 20);
+                    }
+                    */
+
+                    bmp.Save("SaveImage.png");
 
             //load bmp in picturebox
             pictureBox2.Image = bmp;
