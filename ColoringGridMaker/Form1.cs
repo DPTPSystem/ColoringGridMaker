@@ -15,6 +15,7 @@ namespace ColoringGridMaker
 {
     struct ImageDef
     {
+        public String name;
         public int width, height, size, bitPixel, StartAddr;
         public int[] Colors;
     }
@@ -76,6 +77,7 @@ namespace ColoringGridMaker
 
                 // Fájl neve
                 label4.Text = Path.GetFileName(open.FileName);
+                BMP.name = Path.GetFileName(open.FileName);
 
                 // Ha a kép nem fér bele a megadott fix keretbe
                 if (Image.FromFile(open.FileName).Width > 480 || Image.FromFile(open.FileName).Height > 300)
@@ -266,17 +268,17 @@ namespace ColoringGridMaker
             }
             pictureBox2.Image = bmpSave;
             // Image save
-            bmp.Save("SaveImage.png");
-            bmp2.Save("SaveImage_ColorPalette.png");
+            bmp.Save(BMP.name + "_SaveImage.png");
+            bmp2.Save(BMP.name + "_SaveImage_ColorPalette.png");
             if (checkBox2.Checked)
-                bmpSave.Save("SaveImage_Complette.png");
+                bmpSave.Save(BMP.name + "_SaveImage_Complette.png");
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try
             {
-                bmp.Save("SaveImage.png");
+                bmp.Save(BMP.name + "_SaveImage.png");
                 MessageBox.Show("Save successful!");
             }
             catch

@@ -24,6 +24,9 @@
 * * Opcionális szinpalette integráció
 * * Képek külömböző exportálása (Normal számkódos, Külön színpaletta, kombinált - kettőt az egyben)
 * * Rács optimalizálása
+* 2023.07.01. Fejlesztés 3 (v1.0)
+* * Fáj neve tartalmazza az eredeti fájl nevét
+* * Használható v1.0 verzió elkészült.
 
 # Mi is ez?
 Egy program, amely egy képet színkód alapján detektál és rácsos szerkezetbe rendezve tervet készít és ezzel segít, egy amolyan kifestős festők 
@@ -50,7 +53,8 @@ hogy a megvalósítás közben milyen egyéb változások kerülnek a programban
 A képet annak megfelelően készítem elő, hogy még is mekkora felbontásban és mennyi színnel akarok dolgozni. Kezdés képen mindenképp érdemes 
 kisebb felbontást és kevesebb színvariációt választani, mert a túl nagy felbontás ás túl sok szín iszonyat koncentrációt és még több türelmet 
 követel meg, főként a színek kikeverése és a sok részlet miatt. Képeket mindenképp BMP vagy is nyers formában konvertáljuk mert ez biztosítja a 
-képek könnyebb feldolgozását, plusz a minőség is a legjobb. 
+képek könnyebb feldolgozását, plusz a minőség is a legjobb. Fontos továbbá, hogy az elkészített képünk mérete (szélesség x magasság) 8-al 
+osztható legyen, ha ez nem így van a program hibás megjelenítést fog követni. (később javítható)
 
 # Program
 Most íródik. A "folyamat" fejléc alatt részleteiben listázódik az előrehaladás.

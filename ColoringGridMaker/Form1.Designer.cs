@@ -127,7 +127,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(223, 13);
             this.label1.TabIndex = 3;
-            this.label1.Text = "DPTP System: Coloring Grid Maker 2023 v0.7";
+            this.label1.Text = "DPTP System: Coloring Grid Maker 2023 v1.0";
             // 
             // button1
             // 
