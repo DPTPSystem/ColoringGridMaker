@@ -16,7 +16,7 @@ namespace ColoringGridMaker
     struct ImageDef
     {
         public String name;
-        public int width, height, size, bitPixel, StartAddr;
+        public int width, height, size, bitPixel, StartAddr, NewW, NewH;
         public int[] Colors;
     }
 
@@ -25,7 +25,8 @@ namespace ColoringGridMaker
         ImageDef BMP = new ImageDef();
         Bitmap bmp;
         byte[] rows;
-        
+        Image img;
+
         public Form1()
         {
             InitializeComponent();
@@ -33,9 +34,8 @@ namespace ColoringGridMaker
         }
 
         // Saját inicializló eljárás, csak hogy rendezettebb legyen a kód
-        private void init()
+        public void init()
         {
-
             // icon beállítása
             Icon icon = new Icon("../../adatok.ico");
             this.Icon = icon;
@@ -49,7 +49,28 @@ namespace ColoringGridMaker
             saveToolStripMenuItem.Enabled = false;
             checkBox1.Enabled = false;
             checkBox2.Enabled = false;
+            this.pictureBox2.MouseWheel += PictureBox2_MouseWheel;
         }
+
+        private void PictureBox2_MouseWheel(object sender, System.Windows.Forms.MouseEventArgs e)
+        {
+            // Override OnMouseWheel event, for zooming in/out with the scroll wheel
+            if (pictureBox2.Image != null)
+            {
+                // If the mouse wheel is moved forward (Zoom in)
+                if (e.Delta > 0)
+                {
+                    pictureBox2.Width = (int)(pictureBox2.Width * 1.25);
+                    pictureBox2.Height = (int)(pictureBox2.Height * 1.25);
+                }
+                else
+                {
+                    pictureBox2.Width = (int)(pictureBox2.Width / 1.25);
+                    pictureBox2.Height = (int)(pictureBox2.Height / 1.25);
+                }
+            }
+        }
+
 
         // Kilépés
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -77,7 +98,7 @@ namespace ColoringGridMaker
 
                 // Fájl neve
                 label4.Text = Path.GetFileName(open.FileName);
-                BMP.name = Path.GetFileName(open.FileName);
+                BMP.name = Path.GetFileNameWithoutExtension(open.FileName);//Path.GetFileName(open.FileName);
 
                 // Ha a kép nem fér bele a megadott fix keretbe
                 if (Image.FromFile(open.FileName).Width > 480 || Image.FromFile(open.FileName).Height > 300)
@@ -87,6 +108,7 @@ namespace ColoringGridMaker
                 }
                 // Kép kirajzolása
                 pictureBox1.Image = Image.FromFile(open.FileName);
+                img = pictureBox1.Image;
 
                 // Fájl byteban történő olvasása
                 //byte[] rows;
@@ -139,10 +161,10 @@ namespace ColoringGridMaker
             int color;
 
             int Pix = Convert.ToInt16(textBox1.Text);
-            int NewW = Pix * BMP.width;
-            int NewH = Pix * BMP.height;
+            BMP.NewW = Pix * BMP.width;
+            BMP.NewH = Pix * BMP.height;
 
-            if (NewW > 480 && NewH > 300)
+            if (BMP.NewW > 480 && BMP.NewH > 300)
             {
                 pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
             }
@@ -150,10 +172,10 @@ namespace ColoringGridMaker
             {
                 pictureBox2.SizeMode = PictureBoxSizeMode.CenterImage;
             }
-            label6.Text = "{" + BMP.width + " * " + BMP.height + "} -> " + "{" + NewW + " * " + NewH + "}";
+            label6.Text = "{" + BMP.width + " * " + BMP.height + "} -> " + "{" + BMP.NewW + " * " + BMP.NewH + "}";
 
             //bitmap
-            bmp = new Bitmap(NewW, NewH);// BMP.width, BMP.height);
+            bmp = new Bitmap(BMP.NewW, BMP.NewH);// BMP.width, BMP.height);
             Graphics graf = Graphics.FromImage(bmp);
 
             /*
@@ -232,8 +254,9 @@ namespace ColoringGridMaker
                 }
             }
 
-            // Color palette created
-            Bitmap bmp2 = new Bitmap(480, 20);
+            // Color palette created and size definition
+            int Mulu = ((Pix * BMP.width) / 480) > 0 ? ((Pix * BMP.width) / 480) : 1;
+            Bitmap bmp2 = new Bitmap((Pix * BMP.width) < 400 ? 400 : Pix * BMP.width, Mulu * 20 + 20);
             Graphics graf2 = Graphics.FromImage(bmp2);
             for (i = 0; i < 16; i++)
             {
@@ -242,22 +265,26 @@ namespace ColoringGridMaker
                 g = ((color >> 16) & 0x000000FF);
                 b = ((color >>  8) & 0x000000FF);
                 SolidBrush fill = new SolidBrush(Color.FromArgb(255, r, g, b));
-                graf2.FillRectangle(fill, 21*i, 0, 20, 20);
+                graf2.FillRectangle(fill, Mulu * 21 * i, 0, Mulu * 20, Mulu * 20);
                 // Create string formatting options (used for alignment)
                 StringFormat format2 = new StringFormat()
                 {
                     Alignment = StringAlignment.Center,
                     LineAlignment = StringAlignment.Center
                 };
-                RectangleF rectf2 = new RectangleF(21*i, 0, 20, 20);
-                graf2.DrawString(i.ToString("X"), new Font("Monospace", Convert.ToInt16(textBox2.Text)), Brushes.Gray, rectf2, format2);
+                // Palette font size definition
+                RectangleF rectf2 = new RectangleF(Mulu * 21 * i, 0, Mulu * 20, Mulu * 20);
+                graf2.DrawString(i.ToString("X"), new Font("Monospace", Mulu * (Convert.ToInt16(textBox2.Text)/2)), Brushes.Gray, rectf2, format2);
             }
 
             // Color palette loading
+            //pictureBox3.Width = Pix * BMP.width;
+            //pictureBox3.Height = Pix * 20 + 20;
+            pictureBox3.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox3.Image = bmp2;
 
             Bitmap bmpSave;
-            // Color Palette save
+            // Color Palette add to save
             if (checkBox2.Checked)
             {
                 bmpSave = MergedBitmaps(bmp, bmp2);
@@ -291,7 +318,7 @@ namespace ColoringGridMaker
         private Bitmap MergedBitmaps(Bitmap bmp1, Bitmap bmp2)
         {
             Bitmap result = new Bitmap(Math.Max(bmp1.Width, bmp2.Width),
-                                       Math.Max(bmp1.Height+20, bmp2.Height));
+                                       Math.Max(bmp1.Height + bmp2.Height, bmp2.Height));
             using (Graphics g = Graphics.FromImage(result))
             {
                 //g.DrawImage(bmp2, Point.Empty);
@@ -300,5 +327,6 @@ namespace ColoringGridMaker
             }
             return result;
         }
+
     }
 }
