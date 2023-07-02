@@ -62,9 +62,15 @@ követel meg, főként a színek kikeverése és a sok részlet miatt. Képeket 
 képek könnyebb feldolgozását, plusz a minőség is a legjobb. Fontos továbbá, hogy az elkészített képünk mérete (szélesség x magasság) 8-al 
 osztható legyen, ha ez nem így van a program hibás megjelenítést produkálhat. (ezt a programban nem vizsgálom)
 
-# Program
-Most íródik. A "folyamat" fejléc alatt részleteiben listázódik az előrehaladás.
-Az elképzelésnek megfelelően készült el.
+# Program használata
+File: fájl betöltése
+Save: menti a fájlt külön
+Exit: program bezárása
+Grid: ha be van áltva, akkor minden pixel körül rácsot rajzol
+C.Palette: ha be van pipálva, akkor a terv aljhoz hozzá illeszti a számozott színpalettát (színpalettát külön is kiexportálja)
+Font Size: a számozás méretét lehet vele beállítani
+pixel multiple: az alap kép méretének szorzója
+Megjegyzés: az elkészült képen az egér görgőjével tudunk nagyítani
 
 # Kapcsolodó videós és képi tartalmak
 Képi anyagok:

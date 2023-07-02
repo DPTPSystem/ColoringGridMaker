@@ -305,7 +305,7 @@ namespace ColoringGridMaker
         {
             try
             {
-                bmp.Save(BMP.name + "_SaveImage.png");
+                bmp.Save(BMP.name + "_DirektSaveImage.png");
                 MessageBox.Show("Save successful!");
             }
             catch
